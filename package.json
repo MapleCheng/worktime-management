@@ -1,9 +1,33 @@
 {
-  "name": "management",
+  "name": "worktime-management",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
+  "main": "main.js",
+  "build": {
+    "extends": null,
+    "productName": "服務時數管理系統",
+    "appId": "com.worktime-management.app",
+    "win": {
+      "target": [
+        "nsis",
+        "zip"
+      ]
+    },
+    "directories": {
+      "output": "./dist",
+      "app": "./"
+    },
+    "files": [
+      "main.js",
+      "build/",
+      "node_modules",
+      "package.json"
+    ]
+  },
   "dependencies": {
     "@babel/core": "7.12.3",
+    "@babel/plugin-syntax-jsx": "^7.12.1",
     "@pmmmwh/react-refresh-webpack-plugin": "0.4.2",
     "@svgr/webpack": "5.4.0",
     "@testing-library/jest-dom": "^5.11.4",
@@ -70,8 +94,9 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
-    "test": "node scripts/test.js"
+    "build": "node scripts/build.js & electron-builder --win --ia32",
+    "test": "node scripts/test.js",
+    "electron": "electron ."
   },
   "eslintConfig": {
     "extends": [
@@ -147,5 +172,9 @@
     "presets": [
       "react-app"
     ]
+  },
+  "devDependencies": {
+    "electron": "^11.1.1",
+    "electron-builder": "^22.9.1"
   }
 }
