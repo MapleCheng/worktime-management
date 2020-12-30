@@ -1,4 +1,6 @@
-import { getSemester } from "../utils/getSemester";
+import request from "../utils/request";
+import { GETurl } from "../utils/utils";
+import getSemester from "../utils/getSemester";
 
 // 新增學生資料
 export const reqNewStudent = async (params) => {
@@ -12,8 +14,8 @@ export const reqNewStudent = async (params) => {
 };
 
 // 取得學生列表
-export const reqGetStudentList = async (params) => {
-  const { semester = getSemester() } = params;
+export const reqGetStudentList = async (params = { semester: getSemester() }) => {
+  const { semester } = params;
 
   const payload = GETurl({ semester });
 
