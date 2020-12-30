@@ -116,7 +116,7 @@ body {
     border: 1px solid rgba(0, 0, 0, 0);
     background: rgba(0, 0, 0, 0);
     margin: 0 5px;
-    padding: 8px 16px;
+    padding: 4px 16px;
     border-radius: 4px;
     user-select: none;
     outline: none;
@@ -154,18 +154,50 @@ body {
     color: #fff;
 
     &:hover {
-      border-color: darkblue;
-      background: darkblue;
+      border-color: rgb(26, 118, 209);
+      background: rgb(26, 118, 209);
     }
 
-    &.btn-cancel {
-      border: 1px solid #aaa;
-      background: #fff;
-      color: #000;
+    &:global(.btn-cancel) {
+      border: 1px solid #aaa !important;
+      background: #fff !important;
+      color: #000 !important;
 
       &:hover {
-        background: #eee;
+        background: #eee !important;
       }
     }
+  }
+}
+:global {
+  .font-red {
+    color: red;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+  .font-green {
+    color: #155724;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+  .alert-green {
+    color: #155724;
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+    margin: 0;
+    padding: 0.5rem 1rem;
+    text-align: center;
+    border-radius: 4px;
+  }
+  .alert-red {
+    color: #721c24;
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    margin: 0;
+    padding: 0.5rem 1rem;
+    text-align: center;
+    border-radius: 4px;
   }
 }

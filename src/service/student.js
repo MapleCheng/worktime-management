@@ -2,6 +2,20 @@ import request from "../utils/request";
 import { GETurl } from "../utils/utils";
 import getSemester from "../utils/getSemester";
 
+// 取得學生詳細資料
+export const reqGetStudentDetail = async (params = { semester: getSemester() }) => {
+  const { semester, student_no } = params;
+
+  const payload = GETurl({ semester, student_no });
+
+  return request(`/student/detail?${payload}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};
+
 // 新增學生資料
 export const reqNewStudent = async (params) => {
   return request(`/student`, {
