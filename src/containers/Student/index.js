@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { BiCog } from "react-icons/bi";
 
 // actions
 import { getSemesterList } from "../../actions/semester";
@@ -35,33 +36,37 @@ class Student extends Component {
       <div>
         {/* header function */}
         <div className={styles["table-func"]}>
-          <button type="button" className="btn btn-submit" onClick={this.handleNewModal}>
-            新增學生
-          </button>
+          <div>
+            <button type="button" className="btn btn-submit" onClick={this.handleNewModal}>
+              新增學生
+            </button>
 
-          <button type="button" className="btn btn-submit" onClick={this.handleExtendwModal}>
-            從上學期繼承
-          </button>
+            <button type="button" className="btn btn-submit" onClick={this.handleExtendwModal}>
+              從上學期繼承
+            </button>
 
-          <button type="button" className="btn btn-submit" onClick={() => this.handleStudentList()}>
-            更新列表
-          </button>
+            <button type="button" className="btn btn-submit" onClick={() => this.handleStudentList()}>
+              更新列表
+            </button>
 
-          <select
-            name="semester"
-            value={semester}
-            onChange={(e) => {
-              this.handleStudentList(e.target.value);
-            }}
-          >
-            {semester_list.map((item, key) => {
-              return (
-                <option key={key} value={item}>
-                  {item}學期
-                </option>
-              );
-            })}
-          </select>
+            <select
+              name="semester"
+              value={semester}
+              onChange={(e) => {
+                this.handleStudentList(e.target.value);
+              }}
+            >
+              {semester_list.map((item, key) => {
+                return (
+                  <option key={key} value={item}>
+                    {item}學期
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+
+          <BiCog size={25} style={{ cursor: "pointer" }} onClick={this.handleSetHostName} />
         </div>
 
         {/* list */}
@@ -114,6 +119,13 @@ class Student extends Component {
     const { dispatch } = this.props;
 
     await getStudentList(dispatch, { semester });
+  };
+
+  // 設定主機位置
+  handleSetHostName = async () => {
+    const { history } = this.props;
+
+    history.push("/hostname");
   };
 }
 

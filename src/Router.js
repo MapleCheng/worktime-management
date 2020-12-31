@@ -15,6 +15,7 @@ class Router extends Component {
         <Switch>
           <Route path="/" exact render={() => <Redirect to="/student" />} />
           <Route path="/student" exact component={Student} />
+          <Route path="/hostname" exact component={SetHostName} />
         </Switch>
       );
     } else {
