@@ -9,13 +9,11 @@ body {
     font-family: "Noto Sans TC", "Roboto", sans-serif;
   }
 
-  .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
+  :global(#root) {
+    width: 95%;
     height: 100vh;
+    min-width: 800px;
+    margin: 0 auto;
   }
 
   .backhome {

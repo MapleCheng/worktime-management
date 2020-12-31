@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 // actions
 import { getSemesterList } from "../../actions/semester";
 import { getStudentList } from "../../actions/student";
+import Modal, { StudentEditorModal } from "../../components/Modal";
 
 // custom components
 import StudentList from "./StudentList";
@@ -21,12 +22,22 @@ class Student extends Component {
     this.handleStudentList();
   }
 
+  state = {
+    newVisible: false,
+  };
+
   render() {
     const { semester, semester_list } = this.props;
+    const { newVisible } = this.state;
+
     return (
       <div>
         {/* header function */}
         <div className={styles["table-func"]}>
+          <button type="button" className="btn btn-submit" onClick={this.handleNewModal}>
+            新增學生
+          </button>
+
           <button type="button" className="btn btn-submit" onClick={() => this.handleStudentList()}>
             更新列表
           </button>
@@ -50,9 +61,25 @@ class Student extends Component {
 
         {/* list */}
         <StudentList />
+
+        {newVisible && (
+          <Modal title="編輯學生資料" onClose={this.handleCloseModal}>
+            <StudentEditorModal onClose={this.handleCloseModal} />
+          </Modal>
+        )}
       </div>
     );
   }
+
+  // 開啟新增學生Modal
+  handleNewModal = async () => {
+    this.setState({ newVisible: true });
+  };
+
+  // 關閉Modal
+  handleCloseModal = () => {
+    this.setState({ newVisible: false });
+  };
 
   // 取得學期列表
   handleSemesterList = async () => {
