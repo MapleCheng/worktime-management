@@ -10,6 +10,7 @@ export const SET_STUDENT_LIST = "SET_STUDENT_LIST";
 
 const setStudentList = (payload) => ({ type: SET_STUDENT_LIST, payload });
 
+// 取得學生列表
 export const getStudentList = async (dispatch, payload) => {
   const res = await reqGetStudentList(payload);
 
@@ -23,6 +24,7 @@ export const getStudentList = async (dispatch, payload) => {
   }
 };
 
+// 取得學生詳細資料
 export const getStudentDetail = async (dispatch, payload) => {
   const res = await reqGetStudentDetail(payload);
 
@@ -31,6 +33,7 @@ export const getStudentDetail = async (dispatch, payload) => {
   }
 };
 
+// 新增學生
 export const newStudent = async (dispatch, payload) => {
   const { semester } = payload;
   const res = await reqNewStudent(payload);
@@ -41,6 +44,7 @@ export const newStudent = async (dispatch, payload) => {
   return res.code;
 };
 
+// 更新學生資料
 export const updateStudent = async (dispatch, payload) => {
   const { semester } = payload;
   const res = await reqUpdateStudent(payload);
@@ -51,6 +55,7 @@ export const updateStudent = async (dispatch, payload) => {
   return res.code;
 };
 
+// 刪除學生
 export const deleteStudent = async (dispatch, payload) => {
   const { semester } = payload;
   const res = await reqDeleteStudent(payload);

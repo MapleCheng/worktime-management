@@ -4,7 +4,7 @@ import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 
 // actions
-import { deleteStudent, getStudentDetail, getStudentList } from "../../actions/student";
+import { deleteStudent, getStudentDetail } from "../../actions/student";
 
 // function
 import { hourFormat, minuteFormat } from "../../utils/timeFormat";
@@ -21,10 +21,6 @@ import Modal, { DeleteModal, StudentEditorModal } from "../../components/Modal";
   data: state,
 }))
 class StudentList extends Component {
-  componentDidMount() {
-    this.handleStudentList();
-  }
-
   state = {
     editorVisible: false,
     deleteVisible: false,
@@ -107,12 +103,6 @@ class StudentList extends Component {
       </>
     );
   }
-
-  handleStudentList = async () => {
-    const { dispatch, semester } = this.props;
-
-    await getStudentList(dispatch, semester);
-  };
 
   handleStudentDetail = async ({ student_no }) => {
     const { history, semester } = this.props;
