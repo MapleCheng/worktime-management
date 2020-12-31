@@ -6,9 +6,6 @@ import { connect } from "react-redux";
 // actions
 import { newStudent, updateStudent } from "../../actions/student";
 
-// function
-import getSemester from "../../utils/getSemester";
-
 // styles
 import styles from "./styles.scss";
 
@@ -20,7 +17,9 @@ const InputTime = styled.input`
 // 暫存 alert Timeout
 let tempAlertTimeOut;
 
-@connect()
+@connect((state) => ({
+  semester: state.student.semester,
+}))
 class StudentEditorModal extends Component {
   state = {
     class_name: this.props.class_name,
@@ -145,7 +144,6 @@ StudentEditorModal.defaultProps = {
   student_name: "",
   student_no: "",
   class_name: "",
-  semester: getSemester(),
   total_minutes: 0,
 };
 StudentEditorModal.protoTypes = {
@@ -154,7 +152,6 @@ StudentEditorModal.protoTypes = {
   class_name: PropTypes.string,
   student_name: PropTypes.string,
   student_no: PropTypes.string,
-  semester: PropTypes.string,
   total_minutes: PropTypes.number,
 };
 export default StudentEditorModal;

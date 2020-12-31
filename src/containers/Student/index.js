@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 // actions
 import { getSemesterList } from "../../actions/semester";
 import { getStudentList } from "../../actions/student";
-import Modal, { StudentEditorModal } from "../../components/Modal";
+import Modal, { ExtendStudentModal, StudentEditorModal } from "../../components/Modal";
 
 // custom components
 import StudentList from "./StudentList";
@@ -23,12 +23,13 @@ class Student extends Component {
   }
 
   state = {
-    newVisible: false,
+    visible: false,
+    extendStudentModalParams: {},
   };
 
   render() {
-    const { semester, semester_list } = this.props;
-    const { newVisible } = this.state;
+    const { semester, semester_list = [] } = this.props;
+    const { visible, extendStudentModalParams } = this.state;
 
     return (
       <div>
@@ -36,6 +37,10 @@ class Student extends Component {
         <div className={styles["table-func"]}>
           <button type="button" className="btn btn-submit" onClick={this.handleNewModal}>
             新增學生
+          </button>
+
+          <button type="button" className="btn btn-submit" onClick={this.handleExtendwModal}>
+            從上學期繼承
           </button>
 
           <button type="button" className="btn btn-submit" onClick={() => this.handleStudentList()}>
@@ -62,9 +67,15 @@ class Student extends Component {
         {/* list */}
         <StudentList />
 
-        {newVisible && (
-          <Modal title="編輯學生資料" onClose={this.handleCloseModal}>
+        {visible === "new" && (
+          <Modal title="新增學生資料" onClose={this.handleCloseModal}>
             <StudentEditorModal onClose={this.handleCloseModal} />
+          </Modal>
+        )}
+
+        {visible === "extend" && (
+          <Modal title="從上學期繼承" onClose={this.handleCloseModal} footer={["cancel"]}>
+            <ExtendStudentModal {...extendStudentModalParams} onClose={this.handleCloseModal} />
           </Modal>
         )}
       </div>
@@ -73,12 +84,22 @@ class Student extends Component {
 
   // 開啟新增學生Modal
   handleNewModal = async () => {
-    this.setState({ newVisible: true });
+    this.setState({ visible: "new" });
+  };
+
+  // 開啟繼承學生Modal
+  handleExtendwModal = async () => {
+    this.setState({
+      visible: "extend",
+      extendStudentModalParams: {
+        className: styles.student_list_table,
+      },
+    });
   };
 
   // 關閉Modal
   handleCloseModal = () => {
-    this.setState({ newVisible: false });
+    this.setState({ visible: false });
   };
 
   // 取得學期列表

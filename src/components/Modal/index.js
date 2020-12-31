@@ -6,9 +6,11 @@ import styles from "./styles.scss";
 
 import _StudentEditorModal from "./StudentEditorModal";
 import _DeleteModal from "./DeleteModal";
+import _ExtendStudentModal from "./ExtendStudentModal";
 
 export const StudentEditorModal = _StudentEditorModal;
 export const DeleteModal = _DeleteModal;
+export const ExtendStudentModal = _ExtendStudentModal;
 
 class Modal extends Component {
   state = {

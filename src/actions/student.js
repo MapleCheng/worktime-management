@@ -4,11 +4,15 @@ import {
   reqUpdateStudent,
   reqNewStudent,
   reqDeleteStudent,
+  reqGetBeforeStudentList,
+  reqExtendsStudent,
 } from "../service/student";
 
 export const SET_STUDENT_LIST = "SET_STUDENT_LIST";
+export const SET_BEFORE_STUDENT_LIST = "SET_BEFORE_STUDENT_LIST";
 
 const setStudentList = (payload) => ({ type: SET_STUDENT_LIST, payload });
+const setBeforeStudentList = (payload) => ({ type: SET_BEFORE_STUDENT_LIST, payload });
 
 // 取得學生列表
 export const getStudentList = async (dispatch, payload) => {
@@ -63,5 +67,29 @@ export const deleteStudent = async (dispatch, payload) => {
   if (res.code === 204) {
     await getStudentList(dispatch, { semester });
   }
+  return res.code;
+};
+
+// 取得前學期學生
+export const getBeforeStudentList = async (dispatch, payload) => {
+  let before_student_list = [];
+  const res = await reqGetBeforeStudentList(payload);
+
+  if (res.code === 200) {
+    before_student_list = res.data.results;
+  }
+
+  await dispatch(
+    setBeforeStudentList({
+      before_student_list,
+    })
+  );
+};
+
+export const extendStudent = async (dispatch, payload) => {
+  const res = await reqExtendsStudent(payload);
+
+  await getStudentList(dispatch, payload);
+
   return res.code;
 };
