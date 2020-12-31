@@ -70,6 +70,13 @@ class StudentList extends Component {
                     <button
                       type="button"
                       className="btn btn-submit"
+                      onClick={() => this.handleStudentDetail({ student_no: item.student_no })}
+                    >
+                      查看
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-submit"
                       onClick={() => this.handleEditModal({ student_no: item.student_no })}
                     >
                       編輯
@@ -105,6 +112,12 @@ class StudentList extends Component {
     const { dispatch, semester } = this.props;
 
     await getStudentList(dispatch, semester);
+  };
+
+  handleStudentDetail = async ({ student_no }) => {
+    const { history, semester } = this.props;
+
+    history.push(`/student/${student_no}?semester=${semester}`);
   };
 
   handleEditModal = async (data) => {
