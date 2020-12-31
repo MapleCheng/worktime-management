@@ -67,10 +67,10 @@ class StudentEditorModal extends Component {
           </div>
         </label>
         <div className={styles.footer}>
-          <button type="submit" className="btn-submit" key="ok">
+          <button type="submit" className="btn btn-submit" key="ok">
             完成
           </button>
-          <button type="button" className="btn-cancel" key="cancel" onClick={onClose}>
+          <button type="button" className="btn btn-cancel" key="cancel" onClick={onClose}>
             關閉
           </button>
         </div>

@@ -1,4 +1,10 @@
-import { reqGetStudentList, reqGetStudentDetail, reqUpdateStudent, reqNewStudent } from "../service/student";
+import {
+  reqGetStudentList,
+  reqGetStudentDetail,
+  reqUpdateStudent,
+  reqNewStudent,
+  reqDeleteStudent,
+} from "../service/student";
 
 export const SET_STUDENT_LIST = "SET_STUDENT_LIST";
 
@@ -40,6 +46,16 @@ export const updateStudent = async (dispatch, payload) => {
   const res = await reqUpdateStudent(payload);
 
   if (res.code === 201) {
+    await getStudentList(dispatch, { semester });
+  }
+  return res.code;
+};
+
+export const deleteStudent = async (dispatch, payload) => {
+  const { semester } = payload;
+  const res = await reqDeleteStudent(payload);
+
+  if (res.code === 204) {
     await getStudentList(dispatch, { semester });
   }
   return res.code;

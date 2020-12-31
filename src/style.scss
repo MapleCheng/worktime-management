@@ -110,64 +110,6 @@ body {
       margin: 5px 0;
     }
   }
-
-  button {
-    font-size: 18px;
-    border: 1px solid rgba(0, 0, 0, 0);
-    background: rgba(0, 0, 0, 0);
-    margin: 0 5px;
-    padding: 4px 16px;
-    border-radius: 4px;
-    user-select: none;
-    outline: none;
-    cursor: pointer;
-
-    &.attendance {
-      border-radius: 999px;
-      width: 180px;
-      height: 180px;
-      margin: 0 auto;
-      padding: 0;
-      border: 2px solid #000;
-      background: dodgerblue;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-
-      strong {
-        font-size: 2rem;
-      }
-
-      span {
-        font-size: 20px;
-      }
-
-      &:hover {
-        background: darkblue;
-      }
-    }
-
-    border: 1px solid dodgerblue;
-    background: dodgerblue;
-    color: #fff;
-
-    &:hover {
-      border-color: rgb(26, 118, 209);
-      background: rgb(26, 118, 209);
-    }
-
-    &:global(.btn-cancel) {
-      border: 1px solid #aaa !important;
-      background: #fff !important;
-      color: #000 !important;
-
-      &:hover {
-        background: #eee !important;
-      }
-    }
-  }
 }
 :global {
   .font-red {
@@ -199,5 +141,50 @@ body {
     padding: 0.5rem 1rem;
     text-align: center;
     border-radius: 4px;
+  }
+}
+:global {
+  .btn {
+    font-size: 16px;
+    border: 1px solid rgba(0, 0, 0, 0);
+    background: rgba(0, 0, 0, 0);
+    margin: 0 5px;
+    padding: 4px 16px;
+    border-radius: 4px;
+    white-space: nowrap;
+    outline: none;
+    cursor: pointer;
+
+    &.btn-cancel {
+      border: 1px solid #aaa;
+      background: #fff;
+      color: #000;
+
+      &:hover {
+        background: #eee;
+      }
+    }
+
+    &.btn-submit {
+      border: 1px solid dodgerblue;
+      background: dodgerblue;
+      color: #fff;
+
+      &:hover {
+        border-color: rgb(24, 112, 199);
+        background: rgb(24, 112, 199);
+      }
+    }
+
+    &.btn-red {
+      border: 1px solid red;
+      background: red;
+      color: #fff;
+
+      &:hover {
+        border-color: rgb(220, 4, 4) !important;
+        background: rgb(220, 4, 4) !important;
+      }
+    }
   }
 }

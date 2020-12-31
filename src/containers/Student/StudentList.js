@@ -4,7 +4,7 @@ import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 
 // actions
-import { getStudentDetail, getStudentList } from "../../actions/student";
+import { deleteStudent, getStudentDetail, getStudentList } from "../../actions/student";
 
 // function
 import { hourFormat, minuteFormat } from "../../utils/timeFormat";
@@ -12,7 +12,7 @@ import { hourFormat, minuteFormat } from "../../utils/timeFormat";
 // custom styles
 import styles from "./styles.scss";
 import getSemester from "../../utils/getSemester";
-import Modal, { StudentEditorModal } from "../../components/Modal";
+import Modal, { DeleteModal, StudentEditorModal } from "../../components/Modal";
 
 @withRouter
 @connect((state) => ({
@@ -26,13 +26,15 @@ class StudentList extends Component {
   }
 
   state = {
-    visible: false,
-    student_detail: {},
+    editorVisible: false,
+    deleteVisible: false,
+    editModalParams: {},
+    deleteModalParams: {},
   };
 
   render() {
-    const { student_list = [], semester } = this.props;
-    const { visible, student_detail } = this.state;
+    const { student_list = [] } = this.props;
+    const { editorVisible, editModalParams, deleteVisible, deleteModalParams } = this.state;
 
     return (
       <>
@@ -68,9 +70,16 @@ class StudentList extends Component {
                     <button
                       type="button"
                       className="btn btn-submit"
-                      onClick={() => this.handleEditStudent({ student_no: item.student_no, semester })}
+                      onClick={() => this.handleEditModal({ student_no: item.student_no })}
                     >
                       編輯
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-red"
+                      onClick={() => this.handleDeleteModal({ id: item.id, student_name: item.student_name })}
+                    >
+                      刪除
                     </button>
                   </td>
                 </tr>
@@ -78,9 +87,14 @@ class StudentList extends Component {
             })}
           </tbody>
         </table>
-        {visible && (
-          <Modal title="編輯學生資料" onClose={this.handleCloseModal} footer={false}>
-            <StudentEditorModal {...student_detail} onClose={this.handleCloseModal} />
+        {editorVisible && (
+          <Modal title="編輯學生資料" onClose={this.handleCloseModal}>
+            <StudentEditorModal {...editModalParams} onClose={this.handleCloseModal} />
+          </Modal>
+        )}
+        {deleteVisible && (
+          <Modal title="刪除學生" onClose={this.handleCloseModal}>
+            <DeleteModal {...deleteModalParams} onClose={this.handleCloseModal} onDelete={this.handleDelete} />
           </Modal>
         )}
       </>
@@ -88,20 +102,48 @@ class StudentList extends Component {
   }
 
   handleStudentList = async () => {
-    const { dispatch } = this.props;
-    await getStudentList(dispatch);
+    const { dispatch, semester } = this.props;
+
+    await getStudentList(dispatch, semester);
   };
 
-  handleEditStudent = async (data) => {
-    const { dispatch } = this.props;
-    const { student_no, semester } = data;
+  handleEditModal = async (data) => {
+    const { dispatch, semester } = this.props;
+    const { student_no } = data;
     const res = await getStudentDetail(dispatch, { student_no, semester });
 
-    this.setState({ visible: true, student_detail: res });
+    this.setState({ editorVisible: true, editModalParams: res });
+  };
+  handleDeleteModal = async (data) => {
+    this.setState({
+      deleteVisible: true,
+      deleteModalParams: {
+        ...data,
+        description: (
+          <>
+            <h2 style={{ color: "red", margin: "10px 0" }}>刪除學生將一併刪除本學期服務時數</h2>
+            <h2>確定要刪除 "{data.student_name}" 嗎?</h2>
+          </>
+        ),
+      },
+    });
   };
 
   handleCloseModal = () => {
-    this.setState({ visible: false });
+    this.setState({ editorVisible: false, deleteVisible: false });
+  };
+
+  handleDelete = async ({ id }) => {
+    const { dispatch, semester } = this.props;
+
+    const res = await deleteStudent(dispatch, {
+      semester,
+      id,
+    });
+
+    if (res === 204) {
+      this.handleCloseModal();
+    }
   };
 }
 

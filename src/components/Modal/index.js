@@ -5,8 +5,10 @@ import PropTypes from "prop-types";
 import styles from "./styles.scss";
 
 import _StudentEditorModal from "./StudentEditorModal";
+import _DeleteModal from "./DeleteModal";
 
 export const StudentEditorModal = _StudentEditorModal;
+export const DeleteModal = _DeleteModal;
 
 class Modal extends Component {
   state = {
@@ -20,7 +22,7 @@ class Modal extends Component {
       <div className={`${styles.modal}${visible ? "" : ` ${styles.hide}`}`} onClick={this.handleClickModal}>
         <div className={styles.container}>
           <div className={styles.header}>
-            <span>{title}</span>
+            <h3>{title}</h3>
             <i className="fas fa-times" onClick={this.handleCloseModal}></i>
           </div>
           <div className={styles.main}>{this.props.children}</div>
@@ -75,7 +77,7 @@ Modal.defaultProps = {
   title: "",
   visible: true,
   onClose: () => {},
-  footer: [],
+  footer: false,
 };
 
 export default Modal;
