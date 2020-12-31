@@ -1,17 +1,26 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
+// actions
+import { newStudent, updateStudent } from "../../actions/student";
+
+// function
 import getSemester from "../../utils/getSemester";
 
+// styles
 import styles from "./styles.scss";
-import { newStudent, updateStudent } from "../../actions/student";
 
 const InputTime = styled.input`
   width: 4rem !important;
   text-align: right;
 `;
 
+// 暫存 alert Timeout
+let tempAlertTimeOut;
+
+@connect()
 class StudentEditorModal extends Component {
   state = {
     class_name: this.props.class_name,
@@ -21,6 +30,12 @@ class StudentEditorModal extends Component {
     total_m: this.props.total_minutes % 60,
     alert: [],
   };
+
+  componentWillUnmount() {
+    if (tempAlertTimeOut) {
+      clearTimeout(tempAlertTimeOut);
+    }
+  }
 
   render() {
     const { semester, onClose } = this.props;
@@ -62,17 +77,21 @@ class StudentEditorModal extends Component {
       </form>
     );
   }
+
+  // 輸入事件
   handleInputText = (event) => {
     const { name, value } = event.target;
     this.setState({ [name]: value });
   };
 
+  // 送出表單
   handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { id, dispatch, onClose } = this.props;
+    const { id, dispatch, onClose, semester } = this.props;
     const { class_name, student_name, student_no, total_h, total_m } = this.state;
 
+    // 判斷輸入內容
     if (class_name === "" || student_name === "" || student_no === "" || total_h === "" || total_m === "") {
       this.setState({ alert: <p className="alert-red">請勿留空</p> });
       return;
@@ -83,20 +102,37 @@ class StudentEditorModal extends Component {
 
     if (id === 0) {
       // 新增學生
-      const res = await newStudent(dispatch, { id, class_name, student_name, student_no, total_h, total_m });
+      const res = await newStudent(dispatch, {
+        id,
+        semester,
+        class_name,
+        student_name,
+        student_no,
+        total_h,
+        total_m,
+      });
 
       if (res === 201) {
         onClose();
       }
     } else {
       // 修改學生
-      const res = await updateStudent(dispatch, { id, class_name, student_name, student_no, total_h, total_m });
+      const res = await updateStudent(dispatch, {
+        id,
+        semester,
+        class_name,
+        student_name,
+        student_no,
+        total_h,
+        total_m,
+      });
 
       if (res === 201) {
         this.setState({ alert: <p className="alert-green">修改成功</p> });
       }
 
-      setTimeout(() => {
+      // 設置 Alert 在5秒後結束提示
+      tempAlertTimeOut = setTimeout(() => {
         this.setState({ alert: [] });
       }, 5000);
     }

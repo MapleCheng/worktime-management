@@ -16,6 +16,7 @@ import Modal, { StudentEditorModal } from "../../components/Modal";
 
 @withRouter
 @connect((state) => ({
+  semester: state.student.semester,
   student_list: state.student.student_list,
   data: state,
 }))
@@ -95,8 +96,6 @@ class StudentList extends Component {
     const { dispatch } = this.props;
     const { student_no, semester } = data;
     const res = await getStudentDetail(dispatch, { student_no, semester });
-
-    console.log(res);
 
     this.setState({ visible: true, student_detail: res });
   };
