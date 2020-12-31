@@ -9,13 +9,11 @@ body {
     font-family: "Noto Sans TC", "Roboto", sans-serif;
   }
 
-  .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
+  :global(#root) {
+    width: 95%;
     height: 100vh;
+    min-width: 800px;
+    margin: 0 auto;
   }
 
   .backhome {
@@ -110,53 +108,50 @@ body {
       margin: 5px 0;
     }
   }
-
-  button {
-    font-size: 18px;
+}
+:global {
+  .font-red {
+    color: red;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+  .font-green {
+    color: #155724;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+  .alert-green {
+    color: #155724;
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+    margin: 0;
+    padding: 0.5rem 1rem;
+    text-align: center;
+    border-radius: 4px;
+  }
+  .alert-red {
+    color: #721c24;
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    margin: 0;
+    padding: 0.5rem 1rem;
+    text-align: center;
+    border-radius: 4px;
+  }
+}
+:global {
+  .btn {
+    font-size: 16px;
     border: 1px solid rgba(0, 0, 0, 0);
     background: rgba(0, 0, 0, 0);
     margin: 0 5px;
-    padding: 8px 16px;
+    padding: 4px 16px;
     border-radius: 4px;
-    user-select: none;
+    white-space: nowrap;
     outline: none;
     cursor: pointer;
-
-    &.attendance {
-      border-radius: 999px;
-      width: 180px;
-      height: 180px;
-      margin: 0 auto;
-      padding: 0;
-      border: 2px solid #000;
-      background: dodgerblue;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-
-      strong {
-        font-size: 2rem;
-      }
-
-      span {
-        font-size: 20px;
-      }
-
-      &:hover {
-        background: darkblue;
-      }
-    }
-
-    border: 1px solid dodgerblue;
-    background: dodgerblue;
-    color: #fff;
-
-    &:hover {
-      border-color: darkblue;
-      background: darkblue;
-    }
 
     &.btn-cancel {
       border: 1px solid #aaa;
@@ -165,6 +160,28 @@ body {
 
       &:hover {
         background: #eee;
+      }
+    }
+
+    &.btn-submit {
+      border: 1px solid dodgerblue;
+      background: dodgerblue;
+      color: #fff;
+
+      &:hover {
+        border-color: rgb(24, 112, 199);
+        background: rgb(24, 112, 199);
+      }
+    }
+
+    &.btn-red {
+      border: 1px solid red;
+      background: red;
+      color: #fff;
+
+      &:hover {
+        border-color: rgb(220, 4, 4) !important;
+        background: rgb(220, 4, 4) !important;
       }
     }
   }
