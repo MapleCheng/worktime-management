@@ -27,6 +27,10 @@ class Student extends Component {
       <div>
         {/* header function */}
         <div className={styles["table-func"]}>
+          <button type="button" className="btn btn-submit" onClick={() => this.handleStudentList()}>
+            更新列表
+          </button>
+
           <select
             name="semester"
             value={semester}
