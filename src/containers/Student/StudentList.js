@@ -107,7 +107,7 @@ class StudentList extends Component {
   handleStudentDetail = async ({ student_no }) => {
     const { history, semester } = this.props;
 
-    history.push(`/student/${student_no}?semester=${semester}`);
+    history.push(`/student/${semester}/${student_no}`);
   };
 
   handleEditModal = async (data) => {

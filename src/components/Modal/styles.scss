@@ -47,6 +47,7 @@
       flex-direction: column;
     }
     .footer {
+      margin-top: 10px;
       display: flex;
       width: 100%;
       justify-content: center;
@@ -59,5 +60,63 @@
   &.hide {
     opacity: 0;
     visibility: hidden;
+  }
+}
+
+:global {
+  .react-timekeeper {
+    position: absolute;
+    will-change: transform;
+    top: 0px;
+    left: 0px;
+    transform: translate3d(355px, 326px, 0px);
+  }
+
+  .date-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin: 10px 0;
+
+    .date {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .week {
+      margin: 0 5px;
+    }
+  }
+
+  .time-box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    white-space: nowrap;
+    margin: 10px 0;
+
+    .react-timekeeper {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    button {
+      background: none;
+      border: 2px solid #0000ff;
+      outline: none;
+      margin: 0;
+      padding: 5px 10px;
+      margin-left: 5px;
+      width: 100%;
+      font-size: 18px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
   }
 }
