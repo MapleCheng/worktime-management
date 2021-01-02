@@ -7,10 +7,12 @@ import styles from "./styles.scss";
 import _StudentEditorModal from "./StudentEditorModal";
 import _DeleteModal from "./DeleteModal";
 import _ExtendStudentModal from "./ExtendStudentModal";
+import _WorktimeEditorModal from "./WorktimeEditorModal";
 
 export const StudentEditorModal = _StudentEditorModal;
 export const DeleteModal = _DeleteModal;
 export const ExtendStudentModal = _ExtendStudentModal;
+export const WorktimeEditorModal = _WorktimeEditorModal;
 
 class Modal extends Component {
   state = {
@@ -21,7 +23,10 @@ class Modal extends Component {
     const { visible } = this.state;
 
     return (
-      <div className={`${styles.modal}${visible ? "" : ` ${styles.hide}`}`} onClick={this.handleClickModal}>
+      <div
+        className={`${styles.modal}${visible ? "" : ` ${styles.hide}`}`}
+        onClick={this.handleClickModal}
+      >
         <div className={styles.container}>
           <div className={styles.header}>
             <h3>{title}</h3>
@@ -33,13 +38,18 @@ class Modal extends Component {
               {footer.map((item) => {
                 if (item === "ok") {
                   return (
-                    <button type="submit" className="btn btn-submit" key="ok">
+                    <button type="button" className="btn btn-submit" key="ok">
                       完成
                     </button>
                   );
                 } else if (item === "cancel") {
                   return (
-                    <button type="button" className="btn btn-cancel" key="cancel" onClick={this.handleCloseModal}>
+                    <button
+                      type="button"
+                      className="btn btn-cancel"
+                      key="cancel"
+                      onClick={this.handleCloseModal}
+                    >
                       關閉
                     </button>
                   );
@@ -72,12 +82,14 @@ class Modal extends Component {
 Modal.propTypes = {
   title: PropTypes.string,
   visible: PropTypes.bool,
+  onFinish: PropTypes.func,
   onClose: PropTypes.func,
 };
 
 Modal.defaultProps = {
   title: "",
   visible: true,
+  onFinish: () => {},
   onClose: () => {},
   footer: false,
 };

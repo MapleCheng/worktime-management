@@ -4,16 +4,17 @@ import { withRouter } from "react-router-dom";
 
 // actions
 import { getWorktimeList } from "../../actions/worktime";
+import { getStudentDetail } from "../../actions/student";
 
 // functions
 import { hourFormat, minuteFormat } from "../../utils/timeFormat";
 
 // custom components
 import WorktimeList from "./WorktimeList";
+import Modal, { WorktimeEditorModal } from "../../components/Modal";
 
 // custom styles
 import styles from "./styles.scss";
-import { getStudentDetail } from "../../actions/student";
 
 @withRouter
 @connect()
@@ -24,16 +25,28 @@ class Worktime extends Component {
   }
 
   state = {
+    semester: "",
     class_name: "",
     student_name: "",
     student_no: "",
     total_minutes: 0,
     working_minutes: 0,
     remaining_minutes: 0,
+    visible: false,
+    modal_params: {},
   };
 
   render() {
-    const { class_name, student_name, student_no, total_minutes, working_minutes, remaining_minutes } = this.state;
+    const {
+      class_name,
+      student_name,
+      student_no,
+      total_minutes,
+      working_minutes,
+      remaining_minutes,
+      visible,
+      modal_params,
+    } = this.state;
 
     return (
       <div>
@@ -70,12 +83,20 @@ class Worktime extends Component {
           <button className="btn btn-cancel" onClick={this.handleGoBack}>
             返回學生列表
           </button>
+          <button type="button" className="btn btn-submit" onClick={this.handleNewWorkTimeModal}>
+            新增時數
+          </button>
           <button type="button" className="btn btn-submit" onClick={this.handleWorktimeList}>
             更新列表
           </button>
         </div>
 
-        <WorktimeList />
+        <WorktimeList {...this.state} />
+        {visible === "new" && (
+          <Modal title="新增時數" onClose={this.handleCloseModal}>
+            <WorktimeEditorModal {...modal_params} onClose={this.handleCloseModal} />
+          </Modal>
+        )}
       </div>
     );
   }
@@ -103,6 +124,36 @@ class Worktime extends Component {
     const { student_no, semester } = match.params;
 
     await getWorktimeList(dispatch, { student_no, semester });
+  };
+
+  // 開啟新增時數modal
+  handleNewWorkTimeModal = async () => {
+    const {
+      semester,
+      class_name,
+      student_name,
+      student_no,
+      total_minutes,
+      working_minutes,
+      remaining_minutes,
+    } = this.state;
+    let modal_params = {};
+
+    modal_params = {
+      semester,
+      class_name,
+      student_name,
+      student_no,
+      total_minutes,
+      working_minutes,
+      remaining_minutes,
+      className: styles.worktime_table_list,
+    };
+    this.setState({ visible: "new", modal_params });
+  };
+
+  handleCloseModal = () => {
+    this.setState({ visible: false, modal_params: {} });
   };
 }
 

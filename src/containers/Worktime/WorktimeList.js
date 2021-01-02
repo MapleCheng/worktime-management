@@ -3,15 +3,15 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import moment from "moment";
 import zhTW from "moment/locale/zh-tw";
+import { withRouter } from "react-router-dom";
 
 // functions
 import { hourFormat, minuteFormat } from "../../utils/timeFormat";
 
 // styles
 import styles from "./styles.scss";
-import { deleteWorktime } from "../../actions/worktime";
-import Modal, { DeleteModal } from "../../components/Modal";
-import { withRouter } from "react-router-dom";
+import { deleteWorktime, getWorktimeDetail } from "../../actions/worktime";
+import Modal, { DeleteModal, WorktimeEditorModal } from "../../components/Modal";
 
 moment.locale("zh-tw", zhTW);
 
@@ -84,9 +84,18 @@ class WorktimeList extends Component {
             })}
           </tbody>
         </table>
+        {visible === "edit" && (
+          <Modal title="編輯時數" onClose={this.handleCloseModal}>
+            <WorktimeEditorModal {...modal_params} onClose={this.handleCloseModal} />
+          </Modal>
+        )}
         {visible === "delete" && (
-          <Modal title="刪除學生" onClose={this.handleCloseModal}>
-            <DeleteModal {...modal_params} onClose={this.handleCloseModal} onDelete={this.handleDelete} />
+          <Modal title="刪除時數" onClose={this.handleCloseModal}>
+            <DeleteModal
+              {...modal_params}
+              onClose={this.handleCloseModal}
+              onDelete={this.handleDelete}
+            />
           </Modal>
         )}
       </div>
@@ -94,9 +103,29 @@ class WorktimeList extends Component {
   }
 
   // 編輯modal
-  handleEditModal = (params) => {
+  handleEditModal = async (params) => {
+    const { dispatch } = this.props;
+
+    const detail = await getWorktimeDetail(dispatch, params);
+
+    const {
+      semester,
+      class_name,
+      student_name,
+      student_no,
+      total_minutes,
+      remaining_minutes,
+    } = this.props;
+
     let modal_params = {
-      ...params,
+      semester,
+      class_name,
+      student_name,
+      student_no,
+      total_minutes,
+      remaining_minutes,
+      className: styles.worktime_table_list,
+      ...detail,
     };
 
     this.setState({ visible: "edit", modal_params });
