@@ -11,7 +11,7 @@ import { hourFormat, minuteFormat } from "../../utils/timeFormat";
 
 // custom components
 import WorktimeList from "./WorktimeList";
-import Modal, { WorktimeEditorModal } from "../../components/Modal";
+import Modal, { WorktimeEditorModal, StudentEditorModal } from "../../components/Modal";
 
 // custom styles
 import styles from "./styles.scss";
@@ -83,6 +83,9 @@ class Worktime extends Component {
           <button className="btn btn-cancel" onClick={this.handleGoBack}>
             返回學生列表
           </button>
+          <button type="button" className="btn btn-submit" onClick={this.handleEditStudentModal}>
+            修改學生資料
+          </button>
           <button type="button" className="btn btn-submit" onClick={this.handleNewWorkTimeModal}>
             新增時數
           </button>
@@ -92,6 +95,13 @@ class Worktime extends Component {
         </div>
 
         <WorktimeList {...this.state} />
+
+        {visible === "editStudent" && (
+          <Modal title="編輯學生資料" onClose={this.handleCloseModal}>
+            <StudentEditorModal {...modal_params} onClose={this.handleCloseModal} />
+          </Modal>
+        )}
+
         {visible === "new" && (
           <Modal title="新增時數" onClose={this.handleCloseModal}>
             <WorktimeEditorModal {...modal_params} onClose={this.handleCloseModal} />
@@ -126,6 +136,16 @@ class Worktime extends Component {
     await getWorktimeList(dispatch, { student_no, semester });
   };
 
+  // 開啟修改學生詳細資料Modal
+  handleEditStudentModal = async (data) => {
+    const { dispatch } = this.props;
+    const { semester, student_no } = this.state;
+
+    const modal_params = await getStudentDetail(dispatch, { student_no, semester });
+
+    this.setState({ visible: "editStudent", modal_params });
+  };
+
   // 開啟新增時數modal
   handleNewWorkTimeModal = async () => {
     const {
@@ -154,6 +174,9 @@ class Worktime extends Component {
 
   handleCloseModal = () => {
     this.setState({ visible: false, modal_params: {} });
+
+    this.handleStudentDetail();
+    this.handleWorktimeList();
   };
 }
 
