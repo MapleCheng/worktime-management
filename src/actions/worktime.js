@@ -1,4 +1,4 @@
-import { reqGetWorktimeList } from "../service/worktime";
+import { reqDeleteWorktime, reqGetWorktimeList } from "../service/worktime";
 
 export const SET_WORKTIME_LIST = "SET_WORKTIME_LIST";
 
@@ -19,4 +19,16 @@ export const getWorktimeList = async (dispatch, payload) => {
       worktime_list,
     })
   );
+};
+
+export const deleteWorktime = async (dispatch, payload) => {
+  const res = await reqDeleteWorktime(payload);
+
+  const { semester, student_no } = payload;
+
+  await getWorktimeList(dispatch, { semester, student_no });
+
+  if (res.state === 200) {
+    return res.code;
+  }
 };

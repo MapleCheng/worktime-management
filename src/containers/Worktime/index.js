@@ -24,7 +24,6 @@ class Worktime extends Component {
   }
 
   state = {
-    id: 0,
     class_name: "",
     student_name: "",
     student_no: "",

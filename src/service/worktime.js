@@ -14,3 +14,17 @@ export const reqGetWorktimeList = async (params) => {
     },
   });
 };
+
+// 刪除學生服務時數
+export const reqDeleteWorktime = async (params) => {
+  const { id } = params;
+
+  const payload = GETurl({ id });
+
+  return request(`/worktime?${payload}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};
