@@ -94,7 +94,7 @@ class Worktime extends Component {
           </button>
         </div>
 
-        <WorktimeList {...this.state} />
+        <WorktimeList {...this.state} onCloseModal={this.handleCloseModal} />
 
         {visible === "editStudent" && (
           <Modal title="編輯學生資料" onClose={this.handleCloseModal}>

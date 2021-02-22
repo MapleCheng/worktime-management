@@ -5,13 +5,17 @@ import moment from "moment";
 import zhTW from "moment/locale/zh-tw";
 import { withRouter } from "react-router-dom";
 
+// custom components
+import Modal, { DeleteModal, WorktimeEditorModal } from "../../components/Modal";
+
+// actions
+import { deleteWorktime, getWorktimeDetail } from "../../actions/worktime";
+
 // functions
 import { hourFormat, minuteFormat } from "../../utils/timeFormat";
 
 // styles
 import styles from "./styles.scss";
-import { deleteWorktime, getWorktimeDetail } from "../../actions/worktime";
-import Modal, { DeleteModal, WorktimeEditorModal } from "../../components/Modal";
 
 moment.locale("zh-tw", zhTW);
 
@@ -156,6 +160,8 @@ class WorktimeList extends Component {
 
   handleCloseModal = () => {
     this.setState({ visible: false });
+
+    this.props.onCloseModal();
   };
 
   // 刪除學生時數
@@ -169,6 +175,8 @@ class WorktimeList extends Component {
   };
 }
 
-WorktimeList.propTypes = {};
+WorktimeList.propTypes = {
+  onCloseModal: PropTypes.func,
+};
 
 export default WorktimeList;

@@ -42,10 +42,14 @@ class Student extends Component {
             </button>
 
             <button type="button" className="btn btn-submit" onClick={this.handleExtendwModal}>
-              從上學期繼承
+              從前學期繼承
             </button>
 
-            <button type="button" className="btn btn-submit" onClick={() => this.handleStudentList()}>
+            <button
+              type="button"
+              className="btn btn-submit"
+              onClick={() => this.handleStudentList()}
+            >
               更新列表
             </button>
 
@@ -79,7 +83,7 @@ class Student extends Component {
         )}
 
         {visible === "extend" && (
-          <Modal title="從上學期繼承" onClose={this.handleCloseModal} footer={["cancel"]}>
+          <Modal title="從前學期繼承" onClose={this.handleCloseModal} footer={["cancel"]}>
             <ExtendStudentModal {...extendStudentModalParams} onClose={this.handleCloseModal} />
           </Modal>
         )}
