@@ -1,6 +1,6 @@
 {
   "name": "worktime-management",
-  "version": "0.1.0",
+  "version": "2.1.0",
   "private": true,
   "homepage": ".",
   "main": "main.js",
@@ -104,10 +104,10 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
+    "build": "node scripts/build.js & electron-builder --win --ia32",
     "test": "node scripts/test.js",
     "electron": "electron .",
-    "dist": "node scripts/build.js & electron-builder --win --ia32"
+    "dist": "node scripts/build.js"
   },
   "eslintConfig": {
     "extends": [
